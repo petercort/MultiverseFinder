@@ -4,7 +4,7 @@ import json
 print "Enter a card name",
 cardMatch = raw_input()
 
-json_file='/Users/petercort/Downloads/AllSets.json'
+json_file='AllSets.json'
 json_data=open(json_file)
 data=json.load(json_data)
 json_data.close()
