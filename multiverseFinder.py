@@ -5,12 +5,18 @@ import json
 #card = raw_input()
 
 cardNames = []
-print "Enter path of list:",
-listDirectory = raw_input()
+numEntered = []
+#print "Enter path of list:",
+#listDirectory = raw_input()
+listDirectory=('cardlist.txt')
 f=open(listDirectory)
 data=f.read().splitlines()
-for line in data:
-	cardNames.append(line)
+
+for i in range(0,len(data)):
+	string=data[i].split(" ", 1)
+	##add the name to list
+	cardNames.append(string[1])
+	numEntered.append(string[0])
 f.close()
 
 json_file='AllSets.json'
@@ -36,15 +42,27 @@ def returnName( cardName ):
 			cardMatch=data[val]["cards"][x]["name"]
 			if cardName == cardMatch:
 				if "multiverseid" in data[val]["cards"][x]:
-					print("Card Name Matched")
-					print("http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid="+str(data[val]["cards"][x]["multiverseid"]))
-					return
+					output = "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid="+str(data[val]["cards"][x]["multiverseid"])
+					return(output)
 			cardNumber=cardNumber+1
 			x=x+1
  
 #print(card)
 #returnName(card)
 
-for val in cardNames:
-	print(val)
-	returnName(val)
+htmlHeader = '<!DOCTYPE html><html lang="en-US"><head><title>HTML DOM Document Objects</title><meta charset="utf-8"><link rel="icon" href="/favicon.ico" type="image/x-icon"></head><body>'
+htmlFooter = '</body><footer></footer></html>'
+
+print(htmlHeader)
+print("<br />")
+for i in range(0, len(cardNames)):
+	gathererOutput = returnName(cardNames[i])
+	print("<a href='"+gathererOutput+"'>"+numEntered[i] + " " + cardNames[i] + "</a>" )
+	print("<br />")
+
+#for val in cardNames:
+#	output = returnName(val)
+#	print("<a href='"+output+"'>"+val+"</a>")
+#	
+print("<br />")	
+print(htmlFooter)
