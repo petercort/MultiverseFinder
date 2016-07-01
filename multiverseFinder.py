@@ -2,10 +2,9 @@
 import json
 
 #print "Enter a card name:",
-#cardMatch = raw_input()
+#card = raw_input()
 
 cardNames = []
-cardInt = 0
 print "Enter path of list:",
 listDirectory = raw_input()
 f=open(listDirectory)
@@ -19,26 +18,33 @@ json_data=open(json_file)
 data=json.load(json_data)
 json_data.close()
 
+##Setting the sets list
 sets = []
 
 for val in data:
 	setCode=(data[val]["code"])
 	sets.append(str(setCode))
+##
 
-while cardInt < len(cardNames):
-	cardName = cardNames[cardInt]
+def returnName( cardName ):
 	for val in sets:
+		default = 'no value'
 		cardNumber=0
 		x=0
-		y=0
 		numCards=len(data[val]["cards"])
 		while cardNumber < numCards:
 			cardMatch=data[val]["cards"][x]["name"]
-			if cardName==cardMatch:
-				print("Card Name Matched")
-				print("http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid="+str(data[val]["cards"][x]["multiverseid"]))
+			if cardName == cardMatch:
+				if "multiverseid" in data[val]["cards"][x]:
+					print("Card Name Matched")
+					print("http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid="+str(data[val]["cards"][x]["multiverseid"]))
+					return
 			cardNumber=cardNumber+1
 			x=x+1
-			break
-		break
-cardInt = cardInt+1
+ 
+#print(card)
+#returnName(card)
+
+for val in cardNames:
+	print(val)
+	returnName(val)
